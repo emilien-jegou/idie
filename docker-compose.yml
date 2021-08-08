@@ -1,12 +1,32 @@
 version: '3.0'
 
 services:
+  idie-dynamodb:
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+
   idie-backend:
     build:
       context: .
       dockerfile: Dockerfile
+    command: dockerize -wait tcp://idie-dynamodb:8000 -timeout 5s cargo watch -x run
     ports:
       - 3000:3000
+    depends_on:
+      - idie-dynamodb
+    links:
+      - idie-dynamodb
+    environment:
+      AWS_ACCESS_KEY_ID: 'DUMMYIDEXAMPLE'
+      AWS_SECRET_ACCESS_KEY: 'DUMMYEXAMPLEKEY'
+      AWS_REGION: $AWS_REGION
+      AWS_DYNDB_ENDPOINT: $AWS_DYNDB_ENDPOINT
     volumes:
       - .:/app
       - /app/target

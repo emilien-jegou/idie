@@ -5,9 +5,11 @@ WORKDIR /app
 
 COPY . /app
 
+RUN apt-get update && apt-get install -y wget
+
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
 RUN cargo install cargo-watch
-
-# Prerun cargo build to avoid doing it when running the container
-RUN cargo build
-
-CMD cargo watch -x run
