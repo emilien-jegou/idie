@@ -6,3 +6,8 @@ edition = "2018"
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 warp = "^0.3"
+dynomite = { git = "https://github.com/softprops/dynomite.git" }
+rusoto_dynamodb = "0.46"
+rusoto_core = "0.46"
+futures = "^0.3"
+uuid = "0.8"

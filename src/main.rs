@@ -1,5 +1,7 @@
 use warp::Filter;
 
+pub mod database;
+
 fn healthcheck() -> impl Filter<Extract = impl warp::Reply> + Clone {
   warp::path("healthcheck").map(warp::reply)
 }
@@ -8,6 +10,7 @@ fn healthcheck() -> impl Filter<Extract = impl warp::Reply> + Clone {
 async fn main() {
   let router = healthcheck();
 
+  database::launch_dynamodb().await.unwrap();
   warp::serve(router).run(([0, 0, 0, 0], 3000)).await;
 }
 
