@@ -7,9 +7,9 @@ use dynomite::{
   Item, Retries,
 };
 use rusoto_core::Region;
+use std::env;
 use std::error::Error;
 use uuid::Uuid;
-use std::env;
 
 #[derive(Item, Clone)]
 pub struct Book {
