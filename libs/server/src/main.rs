@@ -3,7 +3,7 @@ use modules::book::book_service::BookService;
 use shaku::HasComponent;
 use warp::{ Filter, filters::BoxedFilter };
 
-pub mod database;
+pub mod init_db;
 pub mod modules;
 
 fn healthcheck() -> BoxedFilter<(impl warp::Reply,)> {
@@ -34,7 +34,7 @@ async fn main() {
 
   let router = healthcheck().or(add_book);
 
-  database::launch_dynamodb().await.unwrap();
+  init_db::launch_dynamodb().await.unwrap();
   warp::serve(router).run(([0, 0, 0, 0], 3000)).await;
 }
 
