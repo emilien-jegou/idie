@@ -9,6 +9,8 @@ warp = "^0.3"
 dynomite = { git = "https://github.com/softprops/dynomite.git" }
 rusoto_core = { version = "0.47", default_features = false }
 rusoto_dynamodb = { version = "0.47", default_features = false }
+idienamo = { path = "../idienamo" }
 futures = "^0.3"
 uuid = "0.8"
 shaku = "0.6"
+async-trait = "0.1.52"
