@@ -11,6 +11,18 @@ services:
       - "./docker/dynamodb:/home/dynamodblocal/data:rw"
     working_dir: /home/dynamodblocal
 
+  idie-dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      DYNAMO_ENDPOINT: $AWS_DYNDB_ENDPOINT
+      AWS_REGION: $AWS_REGION
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+    depends_on:
+      - idie-dynamodb
+
   idie-backend:
     container_name: idie-backend
     build:
