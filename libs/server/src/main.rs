@@ -4,7 +4,10 @@ use warp::{filters::BoxedFilter, Filter};
 pub mod modules;
 
 fn healthcheck() -> BoxedFilter<(impl warp::Reply,)> {
-  warp::get().and(warp::path("healthcheck")).map(warp::reply).boxed()
+  warp::get()
+    .and(warp::path("healthcheck"))
+    .map(warp::reply)
+    .boxed()
 }
 
 #[tokio::main]
