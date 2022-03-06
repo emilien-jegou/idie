@@ -1,17 +1,19 @@
 [package]
-name = "idie"
+name = "storage_derive"
 version = "0.1.0"
 edition = "2018"
 
+[lib]
+proc-macro = true
+path = "./src/entity-derive-macro.rs"
+
 [dependencies]
 tokio = { version = "1", features = ["full"] }
-warp = "^0.3"
 dynomite = { git = "https://github.com/softprops/dynomite.git" }
+syn = { version = "1.0.86", features = ["full", "extra-traits"] }
 rusoto_core = { version = "0.47", default_features = false }
 rusoto_dynamodb = { version = "0.47", default_features = false }
-idienamo = { path = "../idienamo" }
-storage = { path = "../storage" }
 futures = "^0.3"
 uuid = "0.8"
-shaku = "0.6"
-async-trait = "0.1.52"
+quote = "1.0.15"
+heck = "0.4.0"

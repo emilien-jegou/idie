@@ -13,7 +13,7 @@ rusoto_core = { version = "0.47", default_features = false }
 rusoto_dynamodb = { version = "0.47", default_features = false }
 futures = "^0.3"
 uuid = "0.8"
-idienamo_derive = { path = "../idienamo-derive" }
 async-trait = "0.1.52"
 shaku = "0.6"
 dyn-clone = "1.0.4"
+storage = { path = "../storage" }

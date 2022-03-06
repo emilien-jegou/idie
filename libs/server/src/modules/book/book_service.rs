@@ -1,6 +1,6 @@
 use super::Book;
 use async_trait::async_trait;
-use idienamo::{self, Repository};
+use storage::{self, ShakuRepository};
 use shaku::{Component, Interface};
 use std::error::Error;
 use std::sync::Arc;
@@ -15,7 +15,7 @@ pub trait BookService: Interface {
 #[shaku(interface = BookService)]
 pub struct BookServiceImpl {
   #[shaku(inject)]
-  repository: Arc<dyn Repository<Book>>,
+  repository: Arc<dyn ShakuRepository<Book>>,
 }
 
 #[async_trait]
