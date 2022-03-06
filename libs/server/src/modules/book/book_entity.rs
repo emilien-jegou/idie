@@ -1,5 +1,5 @@
-use idienamo::{self, derives::Entity};
 use dynomite::Item;
+use storage::{self, derives::Entity};
 
 use uuid::Uuid;
 

@@ -9,7 +9,7 @@ pub fn entity_macro(input: TokenStream) -> TokenStream {
 
   let table_name: String = ident.to_string().to_snake_case();
   (quote! {
-      impl ::idienamo::Entity for #ident {
+      impl ::storage::Entity for #ident {
           fn get_table_name() -> &'static str {
               #table_name
           }

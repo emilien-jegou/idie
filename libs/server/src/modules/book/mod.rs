@@ -1,4 +1,5 @@
-use idienamo::{self, DynamoConnection, DynamoRepository};
+use idienamo::{self, DynamoConnection};
+use storage::Repository;
 use shaku::module;
 use std::error::Error;
 use std::sync::Arc;
@@ -15,7 +16,7 @@ pub use book_service::BookService;
 
 module! {
     pub BookModule {
-        components = [DynamoRepository<Book>, book_service::BookServiceImpl, book_controller::BookControllerImpl],
+        components = [Repository<Book, DynamoConnection>, book_service::BookServiceImpl, book_controller::BookControllerImpl],
         providers = []
     }
 }
@@ -25,7 +26,7 @@ pub async fn load(
 ) -> Result<impl Filter<Extract = impl Reply, Error = Rejection> + Clone, Box<dyn Error>> {
   let module = Arc::new(
     BookModule::builder()
-      .with_component_parameters::<DynamoRepository<Book>>(connection.clone())
+      .with_component_parameters::<Repository<Book, DynamoConnection>>(connection.clone())
       .build(),
   );
 

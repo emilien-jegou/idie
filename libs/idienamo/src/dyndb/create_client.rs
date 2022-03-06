@@ -1,4 +1,3 @@
-//use dynomite::{dynamodb::DynamoDbClient, retry::Policy, Item, Retries};
 use dynomite::{
   dynamodb::DynamoDbClient,
   retry::{ Policy, RetryingDynamoDb},
