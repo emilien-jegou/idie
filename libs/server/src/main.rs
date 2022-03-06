@@ -1,7 +1,8 @@
 use idienamo::DynamoConnection;
 use warp::{filters::BoxedFilter, Filter};
 
-pub mod modules;
+mod modules;
+mod middlewares;
 
 fn healthcheck() -> BoxedFilter<(impl warp::Reply,)> {
   warp::get()
