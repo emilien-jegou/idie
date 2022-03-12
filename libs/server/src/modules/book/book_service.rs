@@ -1,10 +1,11 @@
 use super::Book;
 use async_trait::async_trait;
-use storage::{self, ShakuRepository};
 use shaku::{Component, Interface};
 use std::error::Error;
 use std::sync::Arc;
+use storage::{self, ShakuRepository};
 use uuid::Uuid;
+use log::info;
 
 #[async_trait]
 pub trait BookService: Interface {
@@ -21,7 +22,6 @@ pub struct BookServiceImpl {
 #[async_trait]
 impl BookService for BookServiceImpl {
   async fn add_book(&self, name: &str) -> Result<(), Box<dyn Error>> {
-    println!("here");
     self
       .repository
       .put(Book {
@@ -29,7 +29,7 @@ impl BookService for BookServiceImpl {
         title: "AAAAAAAAAA".into(),
       })
       .await?;
-    println!("Added book {}", name);
+    info!("Successfully saved book {}", name);
     Ok(())
   }
 }

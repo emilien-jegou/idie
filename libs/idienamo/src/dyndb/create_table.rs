@@ -5,6 +5,7 @@ use dynomite::dynamodb::{
 };
 use rusoto_core::RusotoError::Service;
 use std::error::Error;
+use log::info;
 
 /// create a table with a single string (S) primary key.
 pub async fn create_table(
@@ -31,10 +32,13 @@ pub async fn create_table(
     .await;
   match res {
     Ok(_) => {
-      println!("Created table {}", table_name);
+      info!("Successfully created table {}", table_name);
       Ok(())
     }
-    Err(Service(ResourceInUse(_))) => Ok(()),
+    Err(Service(ResourceInUse(_))) => {
+      info!("Table {} is already in use, skipping creation", table_name);
+      Ok(())
+    }
     Err(x) => Err(x),
   }?;
   Ok(())
