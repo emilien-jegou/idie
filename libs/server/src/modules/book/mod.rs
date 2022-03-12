@@ -1,8 +1,9 @@
 use idienamo::{self, DynamoConnection};
-use storage::Repository;
-use shaku::module;
+use shaku::{ HasComponent, module };
 use std::error::Error;
 use std::sync::Arc;
+use storage::Repository;
+use storage::ShakuRepository;
 use warp::{Filter, Rejection, Reply};
 
 pub mod book_controller;
@@ -29,6 +30,10 @@ pub async fn load(
       .with_component_parameters::<Repository<Book, DynamoConnection>>(connection.clone())
       .build(),
   );
+
+  let book_repository: &dyn ShakuRepository<Book> = (*module).resolve_ref();
+
+  book_repository.create_table().await?;
 
   let routes = routes::entry(module);
 
