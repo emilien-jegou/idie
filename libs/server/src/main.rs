@@ -13,6 +13,7 @@ fn healthcheck() -> BoxedFilter<(impl warp::Reply,)> {
 
 #[tokio::main]
 async fn main() {
+  env_logger::init();
   let connection = DynamoConnection::connect().unwrap();
   let book_router = modules::book::load(&connection).await.unwrap();
 
