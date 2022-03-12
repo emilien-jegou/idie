@@ -1,10 +1,10 @@
+use super::DynomiteClient;
 use dynomite::dynamodb::{
-  AttributeDefinition, CreateTableError::ResourceInUse, CreateTableInput,
-  KeySchemaElement, ProvisionedThroughput,
+  AttributeDefinition, CreateTableError::ResourceInUse, CreateTableInput, KeySchemaElement,
+  ProvisionedThroughput,
 };
 use rusoto_core::RusotoError::Service;
 use std::error::Error;
-use super::DynomiteClient;
 
 /// create a table with a single string (S) primary key.
 pub async fn create_table(
@@ -30,10 +30,12 @@ pub async fn create_table(
     })
     .await;
   match res {
-    Ok(_) => Ok(()),
+    Ok(_) => {
+      println!("Created table {}", table_name);
+      Ok(())
+    }
     Err(Service(ResourceInUse(_))) => Ok(()),
     Err(x) => Err(x),
   }?;
-  println!("Created table {}", table_name);
   Ok(())
 }
