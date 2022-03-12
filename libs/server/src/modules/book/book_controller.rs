@@ -21,7 +21,7 @@ impl BookController for BookControllerImpl {
   async fn add_book(&self) -> Result<Box<dyn Reply>, Rejection> {
     self.book_service.add_book("hey!").await.unwrap();
     Ok(Box::new(warp::reply::with_status(
-      "Added book 'hey' to the list",
+      warp::reply::json(&"Added book 'hey' to the list"),
       warp::http::StatusCode::CREATED,
     )))
   }
