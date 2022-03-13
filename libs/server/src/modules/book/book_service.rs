@@ -26,7 +26,7 @@ impl BookService for BookServiceImpl {
       .repository
       .put(Book {
         id: Uuid::new_v4(),
-        title: "AAAAAAAAAA".into(),
+        title: name.into(),
       })
       .await?;
     info!("Successfully saved book {}", name);
