@@ -10,19 +10,6 @@ RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y  --d
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-## Youki
-RUN apt-get update && apt-get install -y \
-      pkg-config \
-      libsystemd-dev \
-      libdbus-glib-1-dev \
-      build-essential \
-      libelf-dev \
-      libseccomp-dev
-
-RUN git clone https://github.com/containers/youki.git \
-  && cd youki \
-  && ./build.sh
-
 ## Irie-lang
 
 RUN apt-get update && apt-get install -y \
@@ -59,7 +46,9 @@ RUN apt-get update && apt-get install -y \
       libdbus-glib-1-dev \
       build-essential \
       libelf-dev \
-      libseccomp-dev
+      libseccomp-dev \
+      slirp4netns \
+      && rm -rf /var/lib/apt/lists/*
 
 ENV DOCKERIZE_VERSION v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
@@ -70,5 +59,4 @@ COPY . .
 
 RUN cargo install cargo-watch
 
-COPY --from=idie-deps /app/youki/youki /deps/youki
 COPY --from=idie-deps /app/irie/irie /deps/irie
