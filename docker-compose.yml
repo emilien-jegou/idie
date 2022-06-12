@@ -28,6 +28,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: idie-dev
     command: dockerize -wait tcp://idie-dynamodb:8000 -timeout 30s cargo --color=always watch -x run
     tty: true
     ports:
