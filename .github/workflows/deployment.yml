@@ -1,4 +1,4 @@
-name: idie-build
+name: build
 
 concurrency:
   group: deployment
@@ -47,10 +47,10 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-            # Fix: manually clean cache after each build
-            #
-            # https://github.com/docker/build-push-action/issues/252
-            # https://github.com/moby/buildkit/issues/1896
+      # Fix: manually clean cache after each build
+      #
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
